@@ -3,89 +3,85 @@
 
   "use strict";
 
-  var yPreview = function () { };
+    var datejs = function (option) {
 
-  // 初始化API   入口
-  // 有必要调用到插件本身this的， 就放在prototype上边， 功能函数尽量放在下方工具中
-  yPreview.prototype = {
+	  	this.contd = document.getElementById("datecha");
 
-    options : {
-      name : 'yPreview',
-      elem : 'preview-images'
-    },
-    /**
-     * @method 初始化
-     * @param { object } 由@method config() 提供的配置参数
-     */
-    init: function (opts) {
-        var _this = this;
-        var option = config(opts, this.options);//用户配置
-        var _elems = document.getElementsByClassName(option.elem);
-        var _elemsLength = _elems.length;
-        var index = null;
-      }
-    }
+		this.content = document.getElementById("content");
 
-	var contd = document.getElementById("datecha");
+		this.initdate = []; // 实际参数,一开始默认是当天数据	
 
-	var content = document.getElementById("content");
-
-	var initdate = []; // 实际参数,一开始默认是当天数据
-
-	// 日历表数据模型
-	var datemodle = [
-		[0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0]
-	]; 
-
-	// 初始化 参数选项  initdate 默认当天
-	(function init(initdate) {
-
-		var d = new Date();
-
-		initdate[0] = d.getFullYear();
-
-		initdate[1] = d.getMonth()+1;
-
-		initdate[2] = d.getDate();
-
-		// input 默认值
-		contd[0].value = initdate[0];
-
-		contd[1].value = initdate[1];
-
-		tianchong(initdate)  // 执行初始化渲染
-
-	})(initdate);
-
-    // 事件绑定
-	contd[2].addEventListener("click", function(event) {
-
-		initdate[0] = contd[0].value;
-
-		initdate[1] = contd[1].value;
-
-		content.innerHTML = "";
-
-		datemodle = [
+	  	// 日历表数据模型
+	  	this.datemodle = [
 			[0,0,0,0,0,0,0],
 			[0,0,0,0,0,0,0],
 			[0,0,0,0,0,0,0],
 			[0,0,0,0,0,0,0],
 			[0,0,0,0,0,0,0],
 			[0,0,0,0,0,0,0]
-		];
+		]; 
+  	};
 
- 		tianchong(initdate)
-	});
+  	// 初始化API   入口
+  	// 有必要调用到插件本身this的， 就放在prototype上边， 功能函数尽量放在下方工具中
+    datejs.prototype = {
+	  	constructor:"datejs",
+	    /**
+	     * @method 初始化
+	     * @param { object } 由@method config() 提供的配置参数
+	     */
+	    init: function (opts) {
+	        var _this = this;
+	        // var option = config(opts, this.options);//用户配置
+	        // var _elems = document.getElementsByClassName(option.elem);
+	        // var _elemsLength = _elems.length;
+	        // var index = null;
 
-	// 功能函数
-	// 填充数组
-	function tianchong(option) {
+			// 初始化 参数选项  initdate 默认当天
+			(function(_this) {
+
+				var d = new Date();
+
+				_this.initdate[0] = d.getFullYear();
+
+				_this.initdate[1] = d.getMonth()+1;
+
+				_this.initdate[2] = d.getDate();
+
+				// input 默认值
+				_this.contd[0].value = _this.initdate[0];
+
+				_this.contd[1].value = _this.initdate[1];
+
+				tianchong(_this.initdate, _this.datemodle, _this.initdate)  // 执行初始化渲染
+
+			})(this);
+
+		    // 事件绑定
+			this.contd[2].addEventListener("click", function(event) {
+
+				_this.initdate[0] = _this.contd[0].value;
+
+				_this.initdate[1] = _this.contd[1].value;
+
+				_this.content.innerHTML = "";
+
+				_this.datemodle = [
+					[0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0]
+				];
+
+		 		tianchong(_this.initdate, _this.datemodle, _this.initdate)
+
+			});   
+	    }
+ 	}
+
+	function tianchong(option, _datemodle, _initdate) {
 
 		var dday = myFunction(option);        // 获取当月1号星期几
 
@@ -123,24 +119,24 @@
 				// datemodle[x][y] = t++;
 				// datemodle[x][y] = t++;  // 这里l 代替y 的原因是 用y在做上面判断的时候 浏览器会崩溃 ，而且 会爆i不存在的错误
 				// 
-				
+				// 
 				if( x === 0) {
-					datemodle[0][y] = t++;
+					_datemodle[0][y] = t++;
 				} 
 				if( x === 1) {
-					datemodle[1][y] = t++;
+					_datemodle[1][y] = t++;
 				} 
 				if( x === 2) {
-					datemodle[2][y] = t++;
+					_datemodle[2][y] = t++;
 				} 
 				if( x === 3) {
-					datemodle[3][y] = t++;
+					_datemodle[3][y] = t++;
 				} 
 				if( x === 4) {
-					datemodle[4][y] = t++;
+					_datemodle[4][y] = t++;
 				} 
 				if( x === 5) {
-					datemodle[5][y] = t++;
+					_datemodle[5][y] = t++;
 				} 
 			}
 		}		
@@ -149,15 +145,15 @@
 		for ( let u = dday-1; u >= 0; u-- ){
 
 			// datemodle[0] = {};
-			datemodle[0][u] = dupmonth--;
+			_datemodle[0][u] = dupmonth--;
 
 		}
 
-		xuanran(dday,dmonth)	 // 调用渲染函数
+		xuanran(dday, dmonth, _datemodle, _initdate)	 // 调用渲染函数
 	}
 
 	// 渲染函数
-	function xuanran(dday,dmonth) {
+	function xuanran(dday, dmonth, _datemodle, _initdate) {
 
 		var l=0; // 用l代替y
 
@@ -165,7 +161,7 @@
 
 		var xuanran1;
 
-		for ( var x = 0; x < datemodle.length; x++ ) {
+		for ( var x = 0; x < _datemodle.length; x++ ) {
 
 			xuanran1 = "<li>";
 
@@ -182,13 +178,13 @@
 
 				}
 
-				if ( l == initdate[2] ){
+				if ( l == _initdate[2] ){
 
 					nt = "dangtian"
 
 				}
 
-				xuanran1 += "<span class=" + nt + ">" + datemodle[x][y] + "</span>";
+				xuanran1 += "<span class=" + nt + ">" + _datemodle[x][y] + "</span>";
 
 				if ( y == 6 ) {
 
@@ -262,7 +258,7 @@
     return options;
   }
 
-  // global.yPreview = yPreview;//注册到全局中， 届时可以直接new yPreview() 实例化对象
+  global.datejs = datejs;//注册到全局中， 届时可以直接new datejs() 实例化对象
 
 })(this);
 

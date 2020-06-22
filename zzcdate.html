@@ -5,26 +5,51 @@
 	<title>zzcdata.js-日期插件</title>
 	<link rel="stylesheet" href="zzcdate.css">
 </head>
+<style>	
+	.tone,
+	.tone2,
+	.father {
+		width: 300px;
+		border: 1px solid red;
+	}
+	.father {
+
+	}
+
+	.tone {
+		margin-top: 200px;
+		margin-left: 200px;
+	}
+
+	.tone2 {
+		margin-top: 200px;
+		margin-left: 400px;
+	}
+</style>
 <body>
-	<div class="calendar-container">
-		<form action="#" id="datecha">
-			<input type="text"  id="inputYear">
-			<input type="text"  id="inputMonth">
-			<!-- <input type="text" placeholder="日" id="inputDate"> -->
-			<button id="datebtn">查询</button>
-		</form>
-		<div class="calendar-container-show">
-			<div class="titledate">
-				<span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
-			</div>
-			<ul id="content">
-				
-			</ul>
-		</div>
+	<div class="father" >
 	</div>
+
+	<div class="tone" id="tone">
+	</div>
+
+	<div class="tone2" id="tone2">
+	</div>
+
 	<script src="zzcdate-t.js"></script>
 	<script>
-		var da = new datejs().init();
+		var da = new DateJs({
+			el: ".father"
+		});
+
+		var da = new DateJs({
+			el: ".tone"
+		});
+
+		var daa = new DateJs({
+			el: ".tone2"
+		});
+
 	</script>
 </body>
 </html>
